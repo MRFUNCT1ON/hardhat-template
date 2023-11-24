@@ -15,7 +15,7 @@ const accounts = [
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
-  solidity: "0.8.19",
+  solidity: "0.7.6",
   networks: {
     avalanche: {
       url: `https://avalanche-c-chain.publicnode.com`,
