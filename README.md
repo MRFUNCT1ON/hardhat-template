@@ -10,21 +10,31 @@ Smart Contract Development Kit Template, using HardHat
 
 ## Installation
 
-This project requires several depenencies to run all its features. First, install [`Tenderly CLI`](https://github.com/Tenderly/tenderly-cli), then run the following command to log into Tenderly: 
+Run the standard installation command:
 
 ```bash
-tenderly login --authentication-method access-key --access-key {your_access_key} --force
-```
-
-Following this, run the standard installation command:
-
-```bash
-yarn install
+npm install
 ```
 
 ## Usage
 
+## Support
 
+Currently, this project supports the following chains:
+
+ - Ethereum Mainnet
+ - Optimism Mainnet
+ - Cronos Mainnet
+ - Ethereum Classic Mainnet
+ - xDai Chain (Gnosis)
+ - Matic Mainnet
+ - Manta Pacific Mainnet
+ - Fantom Mainnet
+ - PulseChain Mainnet
+ - KAVA Mainnet
+ - Base Chain Mainnet
+ - Arbitrum Mainnet
+ - Avalanche Mainnet
 
 ## Contributing
 

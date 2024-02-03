@@ -1,24 +1,45 @@
-import { ethers, tenderly } from "hardhat";
+require("@openzeppelin/hardhat-upgrades");
+
+const hre = require("hardhat");
+const { ethers, upgrades } = hre;
+
+upgrades.silenceWarnings();
+
+const fs = require("fs");
+var util = require("util");
+var log_stdout = process.stdout;
+
+var dateNow = new Date();
+var timeNow = (dateNow.getHours() > 12 ? dateNow.getHours() - 12 : dateNow.getHours()) + "-" + dateNow.getMinutes() + (dateNow.getHours() > 12 ? " PM" : " AM");
+var logPath = dateNow.toDateString() + "_" + timeNow + ".log";
+var log_file = fs.createWriteStream("LOGS_" + logPath, { flags: "w" });
+
+console.log = function (d) {
+	log_file.write(util.format(d) + "\n");
+	log_stdout.write(util.format(d) + "\n");
+};
 
 async function main() {
-    const [deployer] = await ethers.getSigners();
 
-    console.log("Deploying contracts with the account:", deployer.address);
+    const Example = await ethers.getContractFactory("Example");
 
-    const token = await ethers.deployContract("Token");
+    console.log("Got contract factories... DONE!");
 
-    console.log("Token address:", await token.getAddress());
+    const ExampleInstance = await upgrades.deployProxy(Example, {
+		initializer: "initialize",
+		unsafeAllow: ["delegatecall"],
+	});
 
-    await tenderly.verify({
-        name: "Token",
-        address: token.getAddress(),
-        libraries: {}
-    });
+    console.log("Deploying Example...");
 
-    console.log("Token verified on Tenderly");
+	await ExampleInstance.waitForDeployment();
+
+    const ExampleAddress = ExampleInstance.address;
+    console.log("Example deployed to: ", ExampleAddress);
+    console.log(" ");
 }
 
 main().then(() => process.exit(0)).catch((error) => {
     console.error(error);
-    process.exit(1);
+	process.exit(1);
 });
